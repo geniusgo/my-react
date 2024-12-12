@@ -1,16 +1,10 @@
 {
   "compilerOptions": {
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true,
-
     "target": "ES2020",
     "useDefineForClassFields": true,
     "module": "ESNext",
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
-    "jsx": "react-jsx",
-    "jsxImportSource": "./src/types",
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -22,9 +16,7 @@
     /* Linting */
     "strict": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true,
-
-    "types": ["react", "node"]
+    "noUncheckedSideEffectImports": true
   },
-  "include": ["src/**/*"]
+  "include": ["src"]
 }

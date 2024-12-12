@@ -8,6 +8,5 @@
         "importSource": "./src/react"
       }
     ]
-  ],
-  "plugins": ["@babel/plugin-transform-runtime"]
+  ]
 }

@@ -1,24 +1,13 @@
-export function jsx(type: string, props: any, key: any) {
-  createElement();
+const jsx = (tagName: string, props: any) => {
   return {
-    type,
-    props: { ...props, key },
+    tagName,
+    props,
   };
-}
+};
 
-export function jsxs(type: string, props: any, key: any) {
-  createElement();
+const jsxs = (tagName: string, props: any) => {
   return {
-    type,
-    props: { ...props, key },
+    tagName,
+    props,
   };
-}
-
-export function Fragment(props: any) {
-  createElement();
-  return props.children;
-}
-
-function createElement() {
-  console.log('hi');
-}
+};
