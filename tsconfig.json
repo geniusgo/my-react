@@ -17,9 +17,6 @@
     /* Linting */
     "strict": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true,
-
-    "types": ["react", "node"]
-  },
-  "include": ["src/**/*", "src/react/jsx-runtime.d.ts"]
+    "noUncheckedSideEffectImports": true
+  }
 }
