@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "compile": "npx babel src --out-dir dist --extensions .ts,.tsx"
+    "transpile": "npx babel src --out-dir dist --extensions .ts,.tsx"
   },
   "devDependencies": {
     "@babel/cli": "^7.26.4",

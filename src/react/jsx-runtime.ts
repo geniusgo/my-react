@@ -1,7 +1,6 @@
 export interface Props {
   [prop: string]: any;
   children?: JSX.Element | JSX.Element[] | string | number | boolean | null | undefined;
-  key?: string | number;
 }
 
 export function jsx(tagName: string, props: Props, key: string | number) {

@@ -4,11 +4,15 @@ declare namespace JSX {
   }
 
   interface ElementChildrenAttribute {
-    children: {}; // children 속성의 타입을 정의
+    children?: {} | null | undefined; // children 속성의 타입을 정의
   }
 
   interface Element {
     tagName: string;
-    props: Props;
+    props?: {
+      [prop: string]: any;
+      children?: {} | null | undefined;
+    };
+    key?: string | number;
   }
 }
