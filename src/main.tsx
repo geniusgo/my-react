@@ -1,10 +1,26 @@
-import { createElement } from './createElement';
+import { createElement, Fragment } from './createElement';
 
-const element = (
-  <div id='app'>
-    <h1>Hello, world!</h1>
-    <p>This is a custom createElement implementation.</p>
-  </div>
-);
+const App = () => {
+  return (
+    <>
+      <div id='app'>
+        <>nice</>
+        <h1 id='h1' style={{ color: 'red' }}>
+          Hello, world!
+        </h1>
+        <p className='p-tag'>This is a custom createElement implementation.</p>
+        <Button />
+      </div>
+    </>
+  );
+};
 
-console.log(JSON.stringify(element, null, 2));
+const Button = () => {
+  return (
+    <div className='button-container'>
+      <button></button>
+    </div>
+  );
+};
+
+console.log(JSON.stringify(App(), null, 2));

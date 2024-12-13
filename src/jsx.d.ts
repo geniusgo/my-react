@@ -1,3 +1,4 @@
+// JSX 구문에 대한 타입 정의
 declare namespace JSX {
   interface IntrinsicElements {
     div: any;
