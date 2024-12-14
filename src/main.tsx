@@ -1,24 +1,45 @@
 import { createElement, Fragment } from './createElement';
 
 const App = () => {
+  let count = 0;
+
+  const handleIncrease = () => {
+    count += 1;
+  };
+
+  const handleDecrease = () => {
+    count -= 1;
+  };
+
   return (
     <>
-      <div id='app'>
-        <>nice</>
-        <h1 id='h1' style={{ color: 'red' }}>
-          Hello, world!
-        </h1>
-        <p className='p-tag'>This is a custom createElement implementation.</p>
-        <Button />
+      <div>
+        <h1>Counter</h1>
+        <Counter count={count} />
+        <Button onIncrease={handleIncrease} onDecrease={handleDecrease} />
       </div>
     </>
   );
 };
 
-const Button = () => {
+const Counter = ({ count }: { count: number }) => {
+  return (
+    <div className='count-container'>
+      <p>{count}</p>
+      <p>{count}</p>
+    </div>
+  );
+};
+
+const Button = ({ onIncrease, onDecrease }: { onIncrease: () => void; onDecrease: () => void }) => {
   return (
     <div className='button-container'>
-      <button></button>
+      <button className='increase' onClick={onIncrease}>
+        +
+      </button>
+      <button className='decrease' onClick={onDecrease}>
+        -
+      </button>
     </div>
   );
 };
