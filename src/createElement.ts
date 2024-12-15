@@ -2,6 +2,7 @@
  * 일반 태그이거나 함수형 컴포넌트면 createElement 함수 실행
  */
 export const createElement = (type: string | Function, props: JSX.Props, ...children: any[]) => {
+  // 함수형 컴포넌트면 props랑 전개한 children 내려줘서 재귀적으로 createElement 실행
   if (typeof type === 'function') {
     return type(props, ...children);
   }
