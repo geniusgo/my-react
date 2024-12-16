@@ -1,8 +1,8 @@
 /**
  * leaf 노드에 있는 텍스트 노드면 type: createTextNode로 처리
  */
-const validTextNode = (child: any) => {
-  if (typeof child === 'string' || typeof child === 'number' || typeof child === 'boolean') {
+const createNode = (child: any) => {
+  if (typeof child === 'string' || typeof child === 'number') {
     return createTextNode(child);
   }
   return child;
@@ -11,7 +11,7 @@ const validTextNode = (child: any) => {
 /**
  * leaf 노드에 있는 값이 string, number, boolean이면 textNode로 표시
  */
-const createTextNode = (child: string | number | boolean) => {
+const createTextNode = (child: string | number) => {
   return { type: 'textNode', children: child };
 };
 
@@ -20,8 +20,8 @@ const createTextNode = (child: string | number | boolean) => {
  */
 const createChildrenNode = (children: any[]) => {
   return children.length === 1
-    ? validTextNode(children[0])
-    : children.map((child) => validTextNode(child));
+    ? createNode(children[0])
+    : children.map((child) => createNode(child));
 };
 
 /**
