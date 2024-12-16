@@ -13,13 +13,19 @@ const App = () => {
 
   return (
     <>
+      <div></div>
       <div>
         <h1>Counter</h1>
+        <temp />
         <Counter count={count} />
         <Button onIncrease={handleIncrease} onDecrease={handleDecrease} />
       </div>
     </>
   );
+};
+
+const temp = () => {
+  return <div></div>;
 };
 
 const Counter = ({ count }: { count: number }) => {
