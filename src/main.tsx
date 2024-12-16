@@ -1,4 +1,4 @@
-import { createElement, Fragment } from './createElement';
+import { createElement, Fragment } from './my_react/createElement';
 
 const App = () => {
   let count = 0;
@@ -16,16 +16,11 @@ const App = () => {
       <div></div>
       <div>
         <h1>Counter</h1>
-        <temp />
         <Counter count={count} />
         <Button onIncrease={handleIncrease} onDecrease={handleDecrease} />
       </div>
     </>
   );
-};
-
-const temp = () => {
-  return <div></div>;
 };
 
 const Counter = ({ count }: { count: number }) => {
