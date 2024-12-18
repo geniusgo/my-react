@@ -12,7 +12,7 @@ const createNode = (child: any): JSX.TextNode | JSX.Element => {
  * leaf 노드에 있는 값이 string, number, boolean이면 textNode로 표시
  */
 const createTextNode = (child: string | number): JSX.TextNode => {
-  return { type: 'textNode', children: child };
+  return { type: 'textNode', props: { children: child } };
 };
 
 /**

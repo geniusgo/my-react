@@ -14,9 +14,12 @@ const App = () => {
 
   return (
     <div className='div' id='hello'>
+      <>
+        <div>div</div>
+      </>
       <ul className='ul'>
-        <li></li>
-        <li></li>
+        <li>hi</li>
+        <li>123</li>
       </ul>
     </div>
   );

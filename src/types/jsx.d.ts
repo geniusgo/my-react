@@ -37,6 +37,8 @@ declare namespace JSX {
 
   interface TextNode {
     type: 'textNode';
-    children: string | number;
+    props: {
+      children: string | number;
+    };
   }
 }
