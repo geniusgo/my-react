@@ -1,5 +1,3 @@
-import { createElement, Fragment } from './my_react/jsx-runtime';
-
 const App = () => {
   let count = 0;
 

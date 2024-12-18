@@ -20,6 +20,7 @@
     "jsx": "preserve", // JSX 코드를 그대로 유지하고, 별도 변환 X
     "jsxFactory": "createElement", // ts가 JSX 코드 컴파일할 때 호출할 함수 지정
     "jsxFragmentFactory": "Fragment", // ts가 fragment JSX 코드 컴파일할 때 호출할 함수 지정
+    "types": ["./src/types/jsx.d.ts"],
 
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -28,6 +29,6 @@
       "src/*": ["./*"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/types.d.ts"],
   "exclude": ["node_modules"]
 }
