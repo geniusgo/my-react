@@ -1,9 +1,6 @@
 import { defineConfig } from 'vite';
 import path from 'path';
 
-// vite.config.ts 파일의 경로를 확인
-const __dirname = path.dirname(new URL(import.meta.url).pathname);
-
 export default defineConfig({
   resolve: {
     alias: {
