@@ -42,3 +42,11 @@ declare namespace JSX {
     };
   }
 }
+
+declare function createElement(
+  type: string | Function,
+  props: JSX.Props,
+  ...children: any[]
+): JSX.Element;
+
+declare function Fragment(props: any, ...children: any[]): JSX.Fragment;

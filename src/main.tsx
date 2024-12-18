@@ -7,5 +7,3 @@ if ($app instanceof HTMLElement) {
   render($app, App());
   console.log($app);
 }
-
-console.log(JSON.stringify(App(), null, 2));

@@ -16,6 +16,7 @@ const App = () => {
     <div className='div' id='hello'>
       <>
         <div>div</div>
+        <div>div</div>
       </>
       <ul className='ul'>
         <li>hi</li>
