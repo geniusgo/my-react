@@ -25,7 +25,7 @@ declare namespace JSX {
     type: string;
     props:
       | {
-          [prop: string]: any;
+          [key: string]: any;
           children?: Children;
         }
       | { children?: Children };
@@ -40,11 +40,3 @@ declare namespace JSX {
     children: string | number;
   }
 }
-
-declare function createElement(
-  type: string | Function,
-  props: JSX.Props,
-  ...children: any[]
-): JSX.Element;
-
-declare function Fragment(props: any, ...children: any[]): JSX.Fragment;

@@ -1,6 +1,10 @@
-# 커스텀 createElement 만들기
+# Week 2. `render` 함수와 `useState` 만들기
 
-- 목표:
-
-  - JSX 구문이 직접 만든 `createElement` 함수로 처리되게 config 설정을 한다.
-  - `createElement` 실행 결과 Virtual DOM으로 관리될 자바스크립트 객체를 반환한다.
+- 목표: 리액트의 `render` 함수와 `useState` 훅의 동작으로 구현한다.
+- 구현 요구사항 정리:
+  - `render` 함수:
+    - `render` 함수를 만든다.
+    - 매개 변수로 `div#root` 태그 요소와 Vritual DOM 객체를 받는다.
+    - Virtual DOM 객체를 깊이를 따라 재귀적으로 순회한다.
+    - `type`의 태그 유형에 따라 HTML 요소를 만들고 위계에 따라 연결한다.
+    - 만들어진 HTML DOM 트리를 `div#root`에 연결한다.
