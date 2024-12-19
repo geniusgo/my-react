@@ -2,10 +2,10 @@ const addAttribute = ($elem: HTMLElement, props: JSX.Props, prop: string) => {
   /* props의 종류에 따라 필요한 처리, 예외 케이스 더 확인되면 추가 필요 */
   switch (prop) {
     case 'styles': {
-      [...Object.keys(props[prop])].forEach((key) => {
+      Object.keys(props[prop]).forEach((key) => {
         ($elem.style as any)[key] = props[prop][key];
       });
-      return props[prop];
+      return;
     }
     case 'key':
       return;
@@ -15,6 +15,7 @@ const addAttribute = ($elem: HTMLElement, props: JSX.Props, prop: string) => {
       prop.slice(0, 2) === 'on'
         ? $elem.addEventListener(prop.slice(2).toLowerCase(), props[prop])
         : $elem.setAttribute(prop, props[prop]);
+      return;
     }
   }
 };
@@ -36,19 +37,19 @@ const renderHTMLElement = ($parent: HTMLElement, type: string, props: JSX.Props)
   if (Object.keys(props).length === 0) return; // props가 빈 객체면 바로 리턴
   if (!props.children) {
     // children이 없으면 attribute만 추가
-    [...Object.keys(props)].forEach((prop) => {
+    Object.keys(props).forEach((prop) => {
       addAttribute($elem, props, prop);
     });
   } else {
-    [...Object.keys(props)].forEach((prop) => {
-      // children이 있으면 children 추가, 없으면 attribute 추가
+    Object.keys(props).forEach((prop) => {
+      // children이면 children 추가, 없으면 attribute 추가
       prop === 'children' ? addChildren($elem, props.children) : addAttribute($elem, props, prop);
     });
   }
 };
 
 const renderFragment = ($parent: HTMLElement, props: JSX.Props) => {
-  [...Object.keys(props)].forEach((prop) => {
+  Object.keys(props).forEach((prop) => {
     if (prop !== 'key') addChildren($parent, props[prop]); // Fragment의 prop이 key면 무시하기
   });
 };
