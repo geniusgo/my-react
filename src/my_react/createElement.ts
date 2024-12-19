@@ -12,7 +12,7 @@ const createNode = (child: any): JSX.TextNode | JSX.Element => {
  * leaf 노드에 있는 값이 string, number, boolean이면 textNode로 표시
  */
 const createTextNode = (child: string | number): JSX.TextNode => {
-  return { type: 'textNode', children: child };
+  return { type: 'textNode', props: { children: child } };
 };
 
 /**
@@ -52,7 +52,7 @@ export const createElement = (
     type,
     props: {
       ...props,
-      children: createChildrenNode(children),
+      children: createChildrenNode(children.flat(Infinity)), // children에 배열이 중첩돼서 들어오면 flat 해주기(e.g. 배열 렌더링)
     },
   };
 };
