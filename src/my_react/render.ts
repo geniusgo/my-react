@@ -1,82 +1,84 @@
-/**
- * - 함수 이름에 대해 추가적으로 고민해보기
- * - fragment에 props로 key가 들어오면 어떻게 처리할지
- * - 뿐만 아니라, props에 key가 들어오는 경우엔 모든 요소에서 DOM에 추가하지 않도록 하는 걸 고려해보기
- */
-
-const addChildrenNode = ($parent: HTMLElement, children: JSX.Element | JSX.Element[]) => {
-  if (Array.isArray(children)) {
-    children.forEach((child: JSX.Element) => addNode($parent, child.type, child.props));
-  } else {
-    addNode($parent, children.type, children.props);
+const addAttribute = ($elem: HTMLElement, props: JSX.Props, prop: string) => {
+  /* props의 종류에 따라 필요한 처리, 예외 케이스 더 확인되면 추가 필요 */
+  switch (prop) {
+    case 'styles': {
+      [...Object.keys(props[prop])].forEach((key) => {
+        ($elem.style as any)[key] = props[prop][key];
+      });
+      return props[prop];
+    }
+    case 'key':
+      return;
+    case 'children':
+      return;
+    default: {
+      prop.slice(0, 2) === 'on'
+        ? $elem.addEventListener(prop.slice(2).toLowerCase(), props[prop])
+        : $elem.setAttribute(prop, props[prop]);
+    }
   }
 };
 
-// child 추가 함수
-const addChildren = ($parent: HTMLElement, props: JSX.Props) => {
-  addChildrenNode($parent, props.children);
+const addChildren = ($parent: HTMLElement, children: JSX.Element | JSX.Element[]) => {
+  if (Array.isArray(children)) {
+    // 배열이면 순회하면서 자식 요소 추가
+    children.forEach((child: JSX.Element) => renderDOM($parent, child.type, child.props));
+  } else {
+    // 배열이 아니면 자식 요소 바로 추가
+    renderDOM($parent, children.type, children.props);
+  }
 };
 
-const addFragment = ($parent: HTMLElement, props: JSX.Props) => {
+const renderHTMLElement = ($parent: HTMLElement, type: string, props: JSX.Props) => {
+  const $elem = document.createElement(type);
+  $parent.appendChild($elem); // DOM 요소 생성해서 추가
+
+  if (Object.keys(props).length === 0) return; // props가 빈 객체면 바로 리턴
+  if (!props.children) {
+    // children이 없으면 attribute만 추가
+    [...Object.keys(props)].forEach((prop) => {
+      addAttribute($elem, props, prop);
+    });
+  } else {
+    [...Object.keys(props)].forEach((prop) => {
+      // children이 있으면 children 추가, 없으면 attribute 추가
+      prop === 'children' ? addChildren($elem, props.children) : addAttribute($elem, props, prop);
+    });
+  }
+};
+
+const renderFragment = ($parent: HTMLElement, props: JSX.Props) => {
   [...Object.keys(props)].forEach((prop) => {
-    /* fragment에 props로 key가 올 땐 어떻게 처리해야 하는지 추가로 확인해보기 */
-    prop === 'key' ? '' : addChildrenNode($parent, props[prop]);
+    if (prop !== 'key') addChildren($parent, props[prop]); // Fragment의 prop이 key면 무시하기
   });
 };
 
-const addTextNode = ($parent: HTMLElement, textContent: JSX.TextNode) => {
+const renderTextNode = ($parent: HTMLElement, textContent: JSX.TextNode) => {
   $parent.textContent = String(textContent);
 };
 
-// attribute 추가 함수
-const addAttribute = ($parent: HTMLElement, props: JSX.Props, prop: string) => {
-  $parent.setAttribute(prop, props[prop]);
-};
-
-const addDomNode = ($parent: HTMLElement, type: string, props: JSX.Props) => {
-  const $elem = document.createElement(type);
-  $parent.appendChild($elem); // DOM 요소 생성해서 바로 추가
-
-  // prop이 children이면 child node 추가, children이 아니면 setAttribute 실행
-  [...Object.keys(props)].forEach((prop) => {
-    prop === 'children' ? addChildren($elem, props) : addAttribute($elem, props, prop);
-  });
-};
-
-const addNode = ($parent: HTMLElement, type: string, props: JSX.Props) => {
-  // type이 textNode면 textContent 추가
-  if (type === 'textNode') {
-    addTextNode($parent, props.children);
-    return;
+const renderDOM = ($parent: HTMLElement, type: string, props: JSX.Props) => {
+  switch (type) {
+    case 'textNode':
+      renderTextNode($parent, props.children);
+      return;
+    case 'fragment':
+      renderFragment($parent, props);
+      return;
+    default: {
+      // 위 경우가 아니면 HTML DOM 요소 추가해주는 함수 실행
+      renderHTMLElement($parent, type, props);
+      return;
+    }
   }
-  // type이 fragment면 바로 하위 요소 추가
-  if (type === 'fragment') {
-    addFragment($parent, props);
-    return;
-  }
-  if (Object.keys(props).length === 0) return; // props가 빈 객체면 바로 리턴
-  if (!props.children) return; // children이 undefined면 바로 리턴
-
-  // 위 경우가 아니면 HTML DOM 요소 추가해주는 함수 실행
-  addDomNode($parent, type, props);
 };
 
 const render = (root: HTMLElement, vDom: JSX.Element) => {
   // vDom이 빈 객체면 바로 return
   if (!vDom.type) return;
 
-  // type에 따라 요소 처리
-  switch (vDom.type) {
-    case 'fragment':
-      addFragment(root, vDom.props);
-      return;
-    case 'textNode':
-      addTextNode(root, vDom.props.children as JSX.TextNode);
-      return;
-    default:
-      addNode(root, vDom.type, vDom.props);
-      return;
-  }
+  // 빈 객체가 아니면 조건에 따라 요소들 추가
+  renderDOM(root, vDom.type, vDom.props);
 };
 
 export default render;

@@ -7,4 +7,17 @@
     - 매개 변수로 `div#root` 태그 요소와 Vritual DOM 객체를 받는다.
     - Virtual DOM 객체를 깊이를 따라 재귀적으로 순회한다.
     - `type`의 태그 유형에 따라 HTML 요소를 만들고 위계에 따라 연결한다.
+      - `textNode`: `$elem.textContent`로 값 추가
+      - `fragment`:
     - 만들어진 HTML DOM 트리를 `div#root`에 연결한다.
+    - 예외 사항 처리
+      - Virtual DOM 객체가 빈 객체일 경우
+        - 바로 반환
+      - 배열 메서드를 처리할 경우
+        - `key`가 props로 전달되면 해당 값은 DOM엔 표시하지 않는다.
+        - 배열 렌더링을 하면 `children`에 중첩 배열이 들어올 수 있기 때문에, `children`을 먼저 `flat(Infinity)`로 처리해준다(createElement에 해당 코드 추가)
+      - `props`에 `styles`로 인라인 스타일이 적용된 경우
+        - 객체의 키를 순회하면서 `$elem.style.{스타일}`에 값을 수동으로 넣어준다.
+      - `props`에 이벤트 핸들러가 올 경우
+        - prefix가 `on`일 경우를 확인해서 `$elem.addEventListener`로 이벤트 핸들러를 별도로 등록해준다.
+        - DOM에는 `props`로 전달된 핸들러를 표시하지 않는다.

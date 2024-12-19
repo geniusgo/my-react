@@ -52,7 +52,7 @@ export const createElement = (
     type,
     props: {
       ...props,
-      children: createChildrenNode(children),
+      children: createChildrenNode(children.flat(Infinity)), // children에 배열이 중첩돼서 들어오면 flat 해주기(e.g. 배열 렌더링)
     },
   };
 };
