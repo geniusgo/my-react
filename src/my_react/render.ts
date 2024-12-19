@@ -50,7 +50,7 @@ const renderHTMLElement = ($parent: HTMLElement, type: string, props: JSX.Props)
 
 const renderFragment = ($parent: HTMLElement, props: JSX.Props) => {
   Object.keys(props).forEach((prop) => {
-    if (prop !== 'key') addChildren($parent, props[prop]); // Fragment의 prop이 key면 무시하기
+    if (prop !== 'key' && props[prop]) addChildren($parent, props[prop]); // Fragment의 prop이 key면 무시하기
   });
 };
 

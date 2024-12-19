@@ -23,6 +23,7 @@ const App = () => {
       <h1>render 함수 구현</h1>
       <p></p>
       <input type='text' className='input-tag' onChange={handleChange} />
+      <></>
       <>
         <div styles={{ color: 'red', 'font-size': '32px' }}>div</div>
         <div>div</div>
