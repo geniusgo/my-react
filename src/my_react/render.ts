@@ -1,20 +1,23 @@
+import { camelCaseToKebabCase } from 'src/utils/caseConverter';
+
 const addAttribute = ($elem: HTMLElement, props: JSX.Props, prop: string) => {
   /* props의 종류에 따라 필요한 처리, 예외 케이스 더 확인되면 추가 필요 */
   switch (prop) {
     case 'key':
     case 'children':
-    case 'styles':
-      {
-        Object.entries(props[prop]).forEach((entries) => {
-          ($elem.style as any)[entries[0]] = entries[1];
-        });
-        return;
-      }
+    case 'styles': {
+      Object.entries(props[prop]).forEach((entries) => {
+        ($elem.style as any)[camelCaseToKebabCase(entries[0])] = entries[1];
+      });
       return;
+    }
     default: {
-      prop.slice(0, 2) === 'on'
-        ? $elem.addEventListener(prop.slice(2).toLowerCase(), props[prop])
-        : $elem.setAttribute(prop, props[prop]);
+      prop.startsWith('on')
+        ? $elem.addEventListener(prop.slice(2).toLowerCase(), props[prop]) // on으로 시작하면 이벤트 리스너 추가
+        : $elem.setAttribute(
+            prop === 'className' ? 'class' : camelCaseToKebabCase(prop), // className이면 class, 아니면 kebab case로 변환해서 추가
+            props[prop]
+          );
       return;
     }
   }
@@ -23,7 +26,7 @@ const addAttribute = ($elem: HTMLElement, props: JSX.Props, prop: string) => {
 const addChildren = ($parent: HTMLElement, children: JSX.Element | JSX.Element[]) => {
   if (Array.isArray(children)) {
     // 배열이면 순회하면서 자식 요소 추가
-    children.forEach((child: JSX.Element) => renderDOM($parent, child.type, child.props));
+    children.forEach((child) => renderDOM($parent, child.type, child.props));
   } else if (children) {
     // 배열이 아니면 자식 요소 바로 추가
     renderDOM($parent, children.type, children.props);

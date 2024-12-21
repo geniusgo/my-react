@@ -1,5 +1,5 @@
 import App from './App';
-import render from './my_react/render';
+import { render } from './my_react';
 
 const $app = document.getElementById('app');
 
