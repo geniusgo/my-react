@@ -17,11 +17,12 @@ const App = () => {
   };
 
   const handleTodoToggle = (id: number) => {
-    setTodos(
-      todos.map((todo) => {
-        return todo.id === id ? { ...todo, isDone: !todo.isDone } : todo;
-      })
-    );
+    setTodos(todos.map((todo) => (todo.id === id ? { ...todo, isDone: !todo.isDone } : todo)));
+  };
+
+  const handleTodoDelete = (id: number) => {
+    console.log(todos.filter((todo) => todo.id !== id));
+    setTodos(todos.filter((todo) => todo.id !== id));
   };
 
   return (
@@ -34,7 +35,7 @@ const App = () => {
           {todos.map((todo) => {
             return (
               <div>
-                <TodoItem {...todo} onClick={handleTodoToggle} />
+                <TodoItem {...todo} onToggle={handleTodoToggle} onDelete={handleTodoDelete} />
               </div>
             );
           })}

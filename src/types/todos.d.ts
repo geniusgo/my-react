@@ -5,6 +5,14 @@ export interface TodoItemType {
 }
 
 export interface TodoItemProps extends TodoItemType {
+  onToggle?: (id: number) => void;
+  onDelete?: (id: number) => void;
+}
+
+export interface ButtonProps {
+  text: string;
+  type?: string;
+  id: number;
   onClick?: (id: number) => void;
 }
 
