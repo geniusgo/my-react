@@ -17,7 +17,6 @@ const App = () => {
   };
 
   const handleTodoToggle = (id: number) => {
-    console.log(id);
     setTodos(
       todos.map((todo) => {
         return todo.id === id ? { ...todo, isDone: !todo.isDone } : todo;
