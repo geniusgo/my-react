@@ -1,7 +1,18 @@
 import { camelCaseToKebabCase } from 'src/utils/caseConverter';
 
-const addEventListener = ($elem: HTMLElement, eventType: string, handler: (e: Event) => void) => {
-  console.log(eventType, handler);
+const handleAttribute = ($elem: HTMLElement, props: JSX.Props, prop: string) => {
+  /**
+   * prop이 boolean으로 들어가야 하는 상황 생길 때마다 케이스 추가 필요
+   */
+  if (prop === 'checked') {
+    const $input = $elem as HTMLInputElement;
+    $input.checked = props[prop];
+  }
+
+  $elem.setAttribute(prop === 'className' ? 'class' : camelCaseToKebabCase(prop), props[prop]);
+};
+
+const addEventHandler = ($elem: HTMLElement, eventType: string, handler: (e: Event) => void) => {
   $elem.removeEventListener(eventType, handler); // 이벤트 핸들러 중복 등록 방지를 위해 먼저 지우고 달기
   $elem.addEventListener(eventType, handler);
 };
@@ -19,11 +30,8 @@ const addAttribute = ($elem: HTMLElement, props: JSX.Props, prop: string) => {
     }
     default: {
       prop.startsWith('on')
-        ? addEventListener($elem, prop.slice(2).toLowerCase(), props[prop]) // on으로 시작하면 이벤트 리스너 추가
-        : $elem.setAttribute(
-            prop === 'className' ? 'class' : camelCaseToKebabCase(prop), // className이면 class, 아니면 kebab case로 변환해서 추가
-            props[prop]
-          );
+        ? addEventHandler($elem, prop.slice(2).toLowerCase(), props[prop]) // on으로 시작하면 이벤트 리스너 추가
+        : handleAttribute($elem, props, prop);
       return;
     }
   }

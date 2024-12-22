@@ -13,26 +13,35 @@ const rerender = () => {
   }
 };
 
-const useState = <T>(init: T) => {
-  // App 재호출 될 때 useState 다시 호출되더라도 관리되던 state 유지해주기
-  if (isFirst) {
-    state = init;
-    isFirst = false;
-  }
+// 즉시 실행 함수를 반환해서 states와 cursor를 클로저로 관리
+const useState = (() => {
+  // useState의 실행 순서에 따라 정의된 상태들 배열로 관리
+  const states: any[] = [];
+  let cursor = 0;
 
-  // 외부에서 state에 직접 접근하지 못하도록 getter 함수로 처리, 즉시 실행 함수로 만들어서 값을 바로 반환
-  const getState = (() => {
-    return state as T;
-  })();
+  return <T>(init: T) => {
+    let currentCursor = cursor;
+    cursor += 1;
 
-  // 새로운 값이 들어오면 클로저로 관리되는 state 업데이트하고 리렌더링
-  const setState = (newState: T) => {
-    state = newState;
-    rerender();
+    // states[cursor]가 undefined면 초기화
+    if (!states[currentCursor]) {
+      states[currentCursor] = init;
+    }
+
+    // 즉시 실행 함수로 필요한 상태 값 반환, state에 직접 접근 못하도록 getState로 래핑해서 내려보내기
+    const getState = () => {
+      return states[currentCursor] as T;
+    };
+
+    const setState = (newState: T) => {
+      states[currentCursor] = newState;
+      cursor = 0; // 상태 업데이트 후 리렌더링 될 때 useState도 다시 처음부터 재실행
+      rerender();
+    };
+
+    // getState의 실행 결과와 setState 함수를 반환
+    return [getState(), setState] as [T, (newState: T) => void];
   };
-
-  // 즉시 실행 함수 getState의 값과 setState 함수 외부로 반환
-  return [getState, setState] as [T, (newState: T) => void];
-};
+})();
 
 export default useState;

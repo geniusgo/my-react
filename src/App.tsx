@@ -1,17 +1,28 @@
 import { useState } from './my_react';
-import { TodoItemProps } from './types/todos';
+import { TodoItemType } from './types/todos';
 import { Input, TodoItem } from './components';
 
 const App = () => {
-  const [todos, setTodos] = useState<TodoItemProps[] | []>([
-    { title: 'todo 1', isDone: false },
-    { title: 'todo 2', isDone: false },
-    { title: 'todo 3', isDone: false },
+  const [todos, setTodos] = useState<TodoItemType[]>([
+    { id: 0, title: 'todo 1', isDone: false },
+    { id: 1, title: 'todo 2', isDone: false },
+    { id: 2, title: 'todo 3', isDone: false },
   ]);
+  const [id, setId] = useState(3);
 
   const handleTodoCreate = (e: Event) => {
     const target = e.target as HTMLInputElement;
-    setTodos([...todos, { title: target.value, isDone: false }]);
+    setTodos([...todos, { id, title: target.value, isDone: false }]);
+    setId(id + 1);
+  };
+
+  const handleTodoToggle = (id: number) => {
+    console.log(id);
+    setTodos(
+      todos.map((todo) => {
+        return todo.id === id ? { ...todo, isDone: !todo.isDone } : todo;
+      })
+    );
   };
 
   return (
@@ -22,7 +33,11 @@ const App = () => {
       <section>
         <div className='todo-items-container'>
           {todos.map((todo) => {
-            return <TodoItem {...todo} />;
+            return (
+              <div>
+                <TodoItem {...todo} onClick={handleTodoToggle} />
+              </div>
+            );
           })}
         </div>
       </section>

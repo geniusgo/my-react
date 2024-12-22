@@ -1,11 +1,13 @@
 import { TodoItemProps } from './../types/todos';
 import Button from './Button';
 
-const TodoItem = ({ title, isDone }: TodoItemProps) => {
+const TodoItem = ({ id, title, isDone, onClick }: TodoItemProps) => {
+  const toggle = isDone ? 'checked' : '';
+
   return (
     <div className='todo-item-container'>
-      <label>
-        <input type='checkbox' />
+      <label htmlFor={`todo-${id}`} onClick={() => onClick!(id)}>
+        <input id={`todo-${id}`} type='checkbox' checked={isDone} />
         <p className={isDone ? 'done' : ''}>{title}</p>
       </label>
       <Button text='edit' />
