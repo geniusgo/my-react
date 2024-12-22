@@ -1,14 +1,5 @@
-const Button = ({ onIncrease, onDecrease }: { onIncrease: () => void; onDecrease: () => void }) => {
-  return (
-    <div className='button-container'>
-      <button className='increase' onClick={onIncrease}>
-        +
-      </button>
-      <button className='decrease' onClick={onDecrease}>
-        -
-      </button>
-    </div>
-  );
+const Button = ({ text, type }: { text: string; type?: string }) => {
+  return <button type={type}>{text}</button>;
 };
 
 export default Button;

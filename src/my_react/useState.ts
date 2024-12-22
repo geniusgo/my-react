@@ -9,7 +9,7 @@ const rerender = () => {
   const $app = document.getElementById('app');
   if ($app instanceof HTMLElement) {
     $app.innerHTML = '';
-    render($app, App()); // App을 항상 최상위 컴포넌트라고 전제하는 것 같아서, 이 부분이 덜 좋아 보임 고민해보고 수정 예정
+    render($app, App()); // 이후 Diffing 알고리즘 구현하는 로직 추가할 땐 App을 import해와서 인자로 전달하는 게 아니라, vDOM을 diffing해서 변경 필요한 곳만 전달하는 게 필요
   }
 };
 

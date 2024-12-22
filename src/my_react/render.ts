@@ -1,6 +1,7 @@
 import { camelCaseToKebabCase } from 'src/utils/caseConverter';
 
 const addEventListener = ($elem: HTMLElement, eventType: string, handler: (e: Event) => void) => {
+  console.log(eventType, handler);
   $elem.removeEventListener(eventType, handler); // 이벤트 핸들러 중복 등록 방지를 위해 먼저 지우고 달기
   $elem.addEventListener(eventType, handler);
 };
