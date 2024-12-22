@@ -8,7 +8,7 @@ const App = () => {
     { id: 1, title: 'todo 2', isDone: false },
     { id: 2, title: 'todo 3', isDone: false },
   ]);
-  const [id, setId] = useState(3); // useRef로 정의했어야 하지만, 커스텀 함수 아직 만들지 않아서 state로 정의
+  const [id, setId] = useState(() => 3); // useRef로 정의했어야 하지만, 커스텀 함수 아직 만들지 않아서 state로 정의
 
   const handleTodoCreate = (e: Event) => {
     const target = e.target as HTMLInputElement;

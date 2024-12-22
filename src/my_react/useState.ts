@@ -16,16 +16,16 @@ const rerender = () => {
 // 즉시 실행 함수를 반환해서 states와 cursor를 클로저로 관리
 const useState = (() => {
   // useState의 실행 순서에 따라 정의된 상태들 배열로 관리
-  const states: any[] = [];
+  const states: unknown[] = [];
   let cursor = 0;
 
-  return <T>(init: T) => {
+  return <T>(init: T | (() => T)) => {
     let currentCursor = cursor;
     cursor += 1;
 
     // states[cursor]가 undefined면 초기화
     if (!states[currentCursor]) {
-      states[currentCursor] = init;
+      states[currentCursor] = typeof init === 'function' ? (init as () => T)() : init;
     }
 
     // 즉시 실행 함수로 필요한 상태 값 반환, state에 직접 접근 못하도록 getState로 래핑해서 내려보내기
