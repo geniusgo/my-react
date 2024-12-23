@@ -1,9 +1,6 @@
 import App from 'src/App';
 import render from './render';
 
-let isFirst = true;
-let state: unknown;
-
 /* DOM 전체를 리렌더링, diffing은 다음에 구현해보기 */
 const rerender = () => {
   const $app = document.getElementById('app');
