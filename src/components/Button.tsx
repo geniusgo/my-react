@@ -1,13 +1,10 @@
-const Button = ({ onIncrease, onDecrease }: { onIncrease: () => void; onDecrease: () => void }) => {
+import { ButtonProps } from 'src/types/todos';
+
+const Button = ({ text, type, id, onClick }: ButtonProps) => {
   return (
-    <div className='button-container'>
-      <button className='increase' onClick={onIncrease}>
-        +
-      </button>
-      <button className='decrease' onClick={onDecrease}>
-        -
-      </button>
-    </div>
+    <button type={type} onClick={() => onClick!(id)}>
+      {text}
+    </button>
   );
 };
 

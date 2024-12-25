@@ -1,41 +1,45 @@
-import Counter from './components/Counter';
-import Button from './components/Button';
+import { useState } from './my_react';
+import { TodoItemType } from './types/todos';
+import { Input, TodoItem } from './components';
 
 const App = () => {
-  let count = 0;
-  const arr = [1, 2, 3, 4, 5];
+  const [todos, setTodos] = useState<TodoItemType[]>([
+    { id: 0, title: 'todo 1', isDone: false },
+    { id: 1, title: 'todo 2', isDone: false },
+    { id: 2, title: 'todo 3', isDone: false },
+  ]);
+  const [id, setId] = useState(() => 3); // useRef로 정의했어야 하지만, 커스텀 함수 아직 만들지 않아서 state로 정의
 
-  const handleIncrease = () => {
-    count += 1;
-  };
-
-  const handleDecrease = () => {
-    count -= 1;
-  };
-
-  const handleChange = (e: Event) => {
+  const handleTodoCreate = (e: Event) => {
     const target = e.target as HTMLInputElement;
-    console.log(target.value);
+    setTodos([...todos, { id, title: target.value, isDone: false }]);
+    setId(id + 1);
+  };
+
+  const handleTodoToggle = (id: number) => {
+    setTodos(todos.map((todo) => (todo.id === id ? { ...todo, isDone: !todo.isDone } : todo)));
+  };
+
+  const handleTodoDelete = (id: number) => {
+    setTodos(todos.filter((todo) => todo.id !== id));
   };
 
   return (
-    <div className='div' id='hello'>
-      <h1>render 함수 구현</h1>
-      <p></p>
-      <input type='text' className='input-tag' onChange={handleChange} />
-      <></>
-      <>
-        <div styles={{ color: 'red', 'font-size': '32px' }}>div</div>
-        <div>div</div>
-      </>
-      {arr.map((num) => (
-        <div key={num}>{num}</div>
-      ))}
-      <div>temp</div>
-      <ul className='ul'>
-        <li>hi</li>
-        <li>123</li>
-      </ul>
+    <div className='todo-lists-container'>
+      <section>
+        <Input placeholder='할 일을 입력하세요' onChange={handleTodoCreate} />
+      </section>
+      <section>
+        <div className='todo-items-container'>
+          {todos.map((todo) => {
+            return (
+              <div>
+                <TodoItem {...todo} onToggle={handleTodoToggle} onDelete={handleTodoDelete} />
+              </div>
+            );
+          })}
+        </div>
+      </section>
     </div>
   );
 };
