@@ -23,8 +23,8 @@ const addAttribute = ($elem: HTMLElement, props: JSX.Props, prop: string) => {
     case 'key':
     case 'children':
     case 'styles': {
-      Object.entries(props[prop]).forEach((entries) => {
-        ($elem.style as any)[camelCaseToKebabCase(entries[0])] = entries[1];
+      Object.entries(props[prop]).forEach(([prop, value]) => {
+        ($elem.style as any)[camelCaseToKebabCase(prop)] = value;
       });
       return;
     }
@@ -59,8 +59,8 @@ const renderHTMLElement = ($parent: HTMLElement, type: string, props: JSX.Props)
 };
 
 const renderFragment = ($parent: HTMLElement, props: JSX.Props) => {
-  Object.entries(props).forEach((prop) => {
-    if (prop[0] !== 'key' && prop[1]) addChildren($parent, prop[1]); // Fragment의 prop이 key면 무시하기
+  Object.entries(props).forEach(([prop, value]) => {
+    if (prop !== 'key' && value) addChildren($parent, value); // Fragment의 prop이 key면 무시하기
   });
 };
 

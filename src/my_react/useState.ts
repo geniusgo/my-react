@@ -16,7 +16,7 @@ const useState = (() => {
   const states: unknown[] = [];
   let cursor = 0;
 
-  return <T>(init: T | (() => T)) => {
+  return <T>(init?: T | (() => T)) => {
     let currentCursor = cursor;
     cursor += 1;
 
@@ -37,7 +37,7 @@ const useState = (() => {
     };
 
     // getState의 실행 결과와 setState 함수를 반환
-    return [getState(), setState] as [T, (newState: T) => void];
+    return [getState(), setState];
   };
 })();
 
